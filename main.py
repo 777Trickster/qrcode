@@ -3,8 +3,20 @@ from fastapi.responses import FileResponse
 import qrcode
 import uuid
 import os
+from fastapi.middleware.cors import CORSMiddleware
 
 app = FastAPI()
+
+
+
+# Allow CORS for the frontend
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=["*"],  # React default port
+    allow_credentials=True,
+    allow_methods=["*"],
+    allow_headers=["*"],
+)
 
 @app.get("/generate_qr")
 def generate_qr(text: str = Query(..., description="Text to encode as QR code")):
